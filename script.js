@@ -1,8 +1,21 @@
 const btn = document.getElementById("btn");
 const list = document.getElementById("sizes");
 
+const manufacturerCards = document.querySelectorAll("[data-manufacturer]");
+
+manufacturerCards.forEach(function(card) {
+    card.addEventListener("click", 
+        function() {
+        const manufacturer = card.dataset.manufacturer;
+        localStorage.setItem("selectedManufacturer", manufacturer);
+        window.location.href = "test.html";
+    });
+});
+
+
 if(btn) { //will run on the home page, will be skipped on the other pages
-    btn.addEventListener("click", function(){
+    btn.addEventListener("click", 
+        function(){
         window.location.href = "test.html";
     });
 }
