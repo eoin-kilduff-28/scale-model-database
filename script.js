@@ -62,9 +62,30 @@ const scaleDescriptions = {
 
 //Generating scale cards
 if(list){
-    const allScale = [...new Set(
-        Object.values(manufacturers).flatMap(manufacturer => manufacturer.scales)
-    )];
+    const chosenManufacturer = localStorage.getItem("chosenManufacturer");
+    const manuData = manufacturers [chosenManufacturer];
+    if(manuData){
+        const scales = manuData.scales;
+        scales.forEach(function(scale) {
+            const card = document.createElement("li");
+            card.classList.add("manufacturer-card");
+            card.dataset.scale = scale;
+            const desc =  scaleDescriptions[scale] ||
+            "Here is a list of scales produced bt the manufacturer, choose one.";
+            card.innerHTML=`
+            <div class = "card-inner">
+            <div class = "card-front">
+            <h2>{scale}</h2>
+            <div class = "card-back>
+            <h3>${scale}</h3>
+            <p>${desc}</p>
+            <button class = "expl">"View model types:"</button>
+            </div>
+            </div>
+            `;
+            list.appendChild(card);
+    });
+}
 
     allScale.forEach(function(scale) {
         const card = document.createElement("li");
@@ -94,10 +115,14 @@ if(list){
         });
     });
 
+
     const exp = document.querySelectorAll(".expl");
     exp.forEach(function(explore){  
         explore.addEventListener("click", function(event){
             event.stopPropagation(); 
+            const card = explore.closest(".manufacturer-card");
+            const scale = card.dataset.scale;
+            localStorage.setItem("chosenScale", scale);
             window.location.href = "size.html";
         });
     });
