@@ -3,14 +3,7 @@ const list = document.getElementById("sizes");
 
 const manufacturerCards = document.querySelectorAll("[data-manufacturer]");
 
-manufacturerCards.forEach(function(card) {
-    card.addEventListener("click", 
-        function() {
-        const manufacturer = card.dataset.manufacturer;
-        localStorage.setItem("chosenManufacturer", manufacturer);
-        window.location.href = "test.html";
-    });
-});
+
 
 
 if(btn) { //will run on the home page, will be skipped on the other pages
@@ -18,7 +11,16 @@ if(btn) { //will run on the home page, will be skipped on the other pages
         function(){
         window.location.href = "test.html";
     });
-}
+};
+
+
+    //moved flip animation further up page
+    const cards = document.querySelectorAll(".card-inner");
+    cards.forEach(function(card){  
+        card.addEventListener("click", function(){
+            card.classList.toggle("is-flipped");
+        });
+    });
 
 //Scale data for each manufacturer
 const manufacturers = {
@@ -90,13 +92,10 @@ if(list){
         list.appendChild(card);
     });
 
-    //flip aimation triggered once card is flipped
-    const cards = document.querySelectorAll(".card-inner");
-    cards.forEach(function(card){  
-        card.addEventListener("click", function(){
-            card.classList.toggle("is-flipped");
-        });
-    });
+
+    
+    
+    };
 
     //handles redirection
     const exp = document.querySelectorAll(".expl");
@@ -104,12 +103,11 @@ if(list){
         explore.addEventListener("click", function(event){
             event.stopPropagation(); //stops the card from spinning again if pressed
             const card = explore.closest(".manufacturer-card");
-            const scale = card.dataset.scale;
-            localStorage.setItem("chosenScale", scale);
+            const scale = card.dataset.manufacturer;
+            localStorage.setItem("chosenManufacturer", scale);
             window.location.href = "size.html"; //redirects user to choose scale
         });
     });
 
 
 };
-}
